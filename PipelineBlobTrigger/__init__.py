@@ -24,7 +24,7 @@ def main(myblob: func.InputStream):
            account_name="blobstrgdestinationacc", # Storage account name
            container_name="demo-data", # Name of Azure blob container
            account_key="v37Qf9R7d8p/sRwVnHG7xNKHxEVrvQANoy1/a7EXwiV0b5TipUdkoh5DX5mbpezY10v2IjhQucnV+AStgSRzSQ==") # Storage account key
-
+    print("blob_output_datastore": blob_output_datastore)
     blob_input_datastore = Datastore.register_azure_blob_container(
            workspace=workspace,
            datastore_name=blob_input_datastore_name,
@@ -39,7 +39,7 @@ def main(myblob: func.InputStream):
 
     input_data_2 = DataReference(datastore=Datastore(workspace, blob_input_datastore_name),data_reference_name="employeedata", 
                                         path_on_datastore="/employee-data.csv")
-
+    print("input_data_2": input_data_2)
     # Define dataset versioning based on input data modification time
     input_data_version = datetime.now().strftime("%Y%m%d%H%M%S")
 
@@ -86,10 +86,11 @@ def main(myblob: func.InputStream):
 
     # Create MLflow pipeline
     pipeline = Pipeline(workspace=workspace, steps=[validation_combination_step])
-
+    print("pipeline": pipeline)
     # Connect the inputs and outputs between steps
     pipeline.validate()
     pipeline_run = experiment.submit(pipeline)
+    print("pipeline Waiting")
     pipeline_run.wait_for_completion()
 
     # Call combine_csv function with input and output paths
