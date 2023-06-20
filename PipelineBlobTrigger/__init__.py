@@ -10,6 +10,7 @@ import pandas as pd
 from azureml.core.compute import ComputeTarget, ComputeInstance
 from azureml.core.compute_target import ComputeTargetException
 import os
+from pathlib import Path
 
 
 def main(myblob: func.InputStream):
@@ -36,7 +37,7 @@ def main(myblob: func.InputStream):
     input_data_2 = DataReference(datastore=Datastore(workspace, blob_input_datastore_name),data_reference_name="employeedata", 
                                         path_on_datastore="/employee-data.csv")
     input_data_version = datetime.now().strftime("%Y%m%d%H%M%S")
-    mlflow_env = azureml.core.Environment.from_conda_specification(name="mlflow-env", file_path="conda.yml")
+    mlflow_env = azureml.core.Environment.from_conda_specification(name="mlflow-env", file_path=Path(__name__).parent / "conda.yml")
     script_name = "validate_and_combine.py"
     script_params = [
         "--input1", input_data_1,
