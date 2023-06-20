@@ -18,18 +18,18 @@ def main(myblob: func.InputStream):
     experiment = Experiment(workspace=workspace, name="taskmlflow")
     blob_output_datastore_name = "outputdatastore"
     blob_input_datastore_name = "inputdatastore"
-    blob_input_datastore = Datastore.register_azure_blob_container(
-           workspace=workspace,
-           datastore_name=blob_input_datastore_name,
-           account_name="blobstorageaccount8b04cc",
-           container_name="demo-data",
-           account_key="oOVa6CNOjw0G1v8plPyARdw/n3uhfKXsxWWmjPg8U3GwflDmDJFFaHMbW9iFDF6T8uVTeTTWinK3+AStg9MVCw==")
-    blob_output_datastore = Datastore.register_azure_blob_container(
-           workspace=workspace,
-           datastore_name=blob_output_datastore_name,
-           account_name="blobstrgdestinationacc",
-           container_name="demo-data",
-           account_key="v37Qf9R7d8p/sRwVnHG7xNKHxEVrvQANoy1/a7EXwiV0b5TipUdkoh5DX5mbpezY10v2IjhQucnV+AStgSRzSQ==")
+    # blob_input_datastore = Datastore.register_azure_blob_container(
+    #        workspace=workspace,
+    #        datastore_name=blob_input_datastore_name,
+    #        account_name="blobstorageaccount8b04cc",
+    #        container_name="demo-data",
+    #        account_key="oOVa6CNOjw0G1v8plPyARdw/n3uhfKXsxWWmjPg8U3GwflDmDJFFaHMbW9iFDF6T8uVTeTTWinK3+AStg9MVCw==")
+    # blob_output_datastore = Datastore.register_azure_blob_container(
+    #        workspace=workspace,
+    #        datastore_name=blob_output_datastore_name,
+    #        account_name="blobstrgdestinationacc",
+    #        container_name="demo-data",
+    #        account_key="v37Qf9R7d8p/sRwVnHG7xNKHxEVrvQANoy1/a7EXwiV0b5TipUdkoh5DX5mbpezY10v2IjhQucnV+AStgSRzSQ==")
     output_data = PipelineData("output_data", datastore=Datastore(workspace, blob_output_datastore_name))
     input_data_1 = DataReference(datastore=Datastore(workspace, blob_input_datastore_name),data_reference_name="departmentdata", 
                                         path_on_datastore="/department-data.csv")
@@ -47,12 +47,12 @@ def main(myblob: func.InputStream):
     compute_config = ComputeInstance.provisioning_configuration(
         vm_size="Standard_DS2_v2"
     )
-    try:
-        compute_instance = ComputeTarget(workspace, compute_name)
-        print("Found existing compute instance.")
-    except ComputeTargetException:
-        compute_instance = ComputeInstance.create(workspace, compute_name, compute_config)
-        compute_instance.wait_for_completion(show_output=True)
+    # try:
+    #     compute_instance = ComputeTarget(workspace, compute_name)
+    #     print("Found existing compute instance.")
+    # except ComputeTargetException:
+    #     compute_instance = ComputeInstance.create(workspace, compute_name, compute_config)
+    #     compute_instance.wait_for_completion(show_output=True)
     validation_combination_step = PythonScriptStep(
         name="Validation and Combination",
         source_directory = os.path.dirname(os.path.realpath(__file__)),
